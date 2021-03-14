@@ -25,11 +25,30 @@ public class DiscountCondition {
                 endTime.compareTo(time) >= 0;
     }
 
-    public boolean isDiscountable(int sequence) throws IllegalAccessException {
-        if (type != DiscountConditionType.SEQUENCE){
-            throw new IllegalAccessException();
+    public boolean isDiscountable(Screening screening)  {
+        if (type == DiscountConditionType.PERIOD) {
+            return isSatisfiedByPeriod(screening);
         }
+        return isSatisfiedBySequence(screening);
+    }
 
-        return this.sequence == sequence;
+    private boolean isDiscountable(DiscountCondition condition, Screening screening) {
+        if (condition.getType() == DiscountConditionType.PERIOD){
+            return  isSatisfiedByPeriod(screening);
+        }
+        return isSatisfiedBySequence(screening);
+    }
+
+    private boolean isSatisfiedByPeriod(Screening screening) {
+        return screening.getWhenScreened().getDayOfWeek().equals(dayOfWeek)
+                && startTime.isBefore(screening.getWhenScreened().toLocalTime())
+                && endTime.isAfter(screening.getWhenScreened().toLocalTime());
+    }
+    private boolean isSatisfiedBySequence(Screening screening) {
+        return sequence == screening.getSequence();
+    }
+
+    public boolean isDiscountable(int sequence) {
+        return false;
     }
 }
