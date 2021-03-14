@@ -31,15 +31,15 @@ public class Money {
 
     public Money times(double percent){
         return new Money(this.amount.multiply(
-                BigDecimal.valueOf(percent);
-        ))
+                BigDecimal.valueOf(percent)
+        ));
     }
 
     public boolean isLessThan(Money other){
         return amount.compareTo(other.amount) < 0;
     }
 
-    public boolean isGreatherThanOrEqual(Money other){
+    public boolean isGreaterThanOrEqual(Money other){
         return amount.compareTo(other.amount) >= 0;
     }
 }
