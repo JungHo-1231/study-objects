@@ -13,6 +13,8 @@ public class NightlyDiscountPhone extends Phone {
     private static final int LATE_NIGHT_HOUR = 22;
 
     private Money nightlyAmount;
+    private Money regularAmount;
+    private Duration seconds;
     private List<Call> calls = new ArrayList<>();
 
     public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds) {
@@ -28,13 +30,16 @@ public class NightlyDiscountPhone extends Phone {
         Money nightlyFee = Money.ZERO;
 
         for (Call call : calls) {
-            if (call.getFrom().getHour() >= LATE_NIGHT_HOUR) {
-                nightlyFee = nightlyFee.plus(getAmount().minus(nightlyAmount).times(
-                        call.getDuration().getSeconds() / getSeconds().getSeconds()
-                ));
-            }
+            result = result.plus(calculateCallFee(call));
         }
-        // 일반 요금제는 plus 를 쓰는데 여기에서는 minus 를 쓴다.
-        return result.minus(nightlyFee);
+        return result;
+    }
+
+    private Money calculateCallFee(Call call) {
+        if (call.getFrom().getHour() >= LATE_NIGHT_HOUR) {
+            return nightlyAmount.times(call.getDuration().getSeconds() / seconds.getSeconds());
+        } else {
+            return regularAmount.times(call.getDuration().getSeconds() / seconds.getSeconds());
+        }
     }
 }
