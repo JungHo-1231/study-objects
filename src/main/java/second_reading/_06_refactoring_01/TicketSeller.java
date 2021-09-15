@@ -12,9 +12,9 @@ public class TicketSeller {
         this.ticketOffice = ticketOffice;
     }
 
-    public void setTicket(Audience audience) {
+    public void sellTo(Audience audience) {
         ticketOffice.plusAmount(
-                audience.setTicket(ticketOffice.getTicket())
+                audience.buy(ticketOffice.getTicket())
         );
 
 //        if (audience.getBag().hasInvitation()) {

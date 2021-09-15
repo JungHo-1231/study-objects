@@ -12,9 +12,8 @@ public class Audience {
         this.bag = bag;
     }
 
-    public Long setTicket(Ticket ticket) {
-
-        return bag.setTicket(ticket);
+    public Long buy(Ticket ticket) {
+        return bag.hold(ticket);
 
 //        if (bag.hasInvitation()) {
 //            bag.setTicket(ticket);

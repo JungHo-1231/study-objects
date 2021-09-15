@@ -48,7 +48,7 @@ public class Bag {
         this.amount += amount;
     }
 
-    public long setTicket(Ticket ticket) {
+    public long hold(Ticket ticket) {
         if (hasInvitation()) {
             this.ticket = ticket;
             return 0L;

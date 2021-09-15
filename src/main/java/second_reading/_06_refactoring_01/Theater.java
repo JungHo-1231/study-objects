@@ -15,7 +15,7 @@ public class Theater {
      */
     public void enter(Audience audience) {
 
-        ticketSeller.setTicket(audience);
+        ticketSeller.sellTo(audience);
 
 //        if (audience.getBag().hasInvitation()) {
 //            // 초대장이 있는 관람객의 경우
